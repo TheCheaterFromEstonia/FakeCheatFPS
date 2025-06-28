@@ -2,7 +2,7 @@ import tkinter as tk
 
 root = tk.Tk()
 root.geometry("640x360")
-root.configure(background="#9F2B68")
+root.configure(background="#000000")
 
 def toggle_aimbot():
     global aimbot_status
