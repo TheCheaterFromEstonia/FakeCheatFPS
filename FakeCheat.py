@@ -1,65 +1,77 @@
 import tkinter as tk
+import winsound  # For sound on toggle (Windows only)
 
 root = tk.Tk()
-root.geometry("640x360")
-root.configure(background="#000000")
+root.title("Fake Cheat Panel")
+root.geometry("500x500")
+root.configure(background="#2c2c2c")
+root.resizable(False, False)
 
-def toggle_aimbot():
-    global aimbot_status
-    aimbot_status = "ON" if aimbot_status == "OFF" else "OFF"
-    label_aimbot.config(text=f"AIMBOT:{aimbot_status}", fg="#00ff00" if aimbot_status == "ON" else "#ff0000",
-                        bg="#9F2B68", font=("Helvetica", 24), highlightbackground="#ffffff")
+# Sound effect (beep)
+def play_beep():
+    winsound.Beep(800, 50)  # (frequency, duration)
 
-def toggle_esp():
-    global esp_status
-    esp_status = "ON" if esp_status == "OFF" else "OFF"
-    label_esp.config(text=f"ESP:{esp_status}", fg="#00ff00" if esp_status == "ON" else "#ff0000",
-                     bg="#9F2B68", font=("Helvetica", 24), highlightbackground="#ffffff")
-    
-def toggle_RapidFire():
-    global RapidFire_status
-    RapidFire_status = "ON" if RapidFire_status == "OFF" else "OFF"
-    label_RapidFire.config(text=f"RapidFire:{RapidFire_status}",  fg="#00ff00" if RapidFire_status == "ON" else "#ff0000" ,
-                           bg="#9F2B68", font=("Helvetica", 24), highlightbackground="#ffffff")
-    
-def toggle_Bhop():
-    global Bhop_status
-    Bhop_status = "ON" if Bhop_status == "OFF" else "OFF"
-    label_Bhop.config(text=f"Bhop:{Bhop_status}", fg="#00ff00" if Bhop_status == "ON" else "#ff0000" ,
-                      bg="#9F2B68", font=("Helvetica", 24), highlightbackground= "#ffffff")
-    
-def toggle_Triggerbot():
-    global Triggerbot_status
-    Triggerbot_status = "ON" if Triggerbot_status == "OFF" else "OFF"
-    label_Triggerbot.config(text=f"Triggerbot:{Triggerbot_status}", fg="#00ff00" if Triggerbot_status == "ON" else "#ff0000" ,
-                            bg="#9F2B68", font=("Helvetica", 24), highlightbackground= "#ffffff")
+# Feature names
+features = ["AIMBOT", "ESP", "RapidFire", "Bhop", "Triggerbot"]
+statuses = {}
+labels = {}
+buttons = {}
 
-aimbot_status = "OFF"
-esp_status = "OFF"
-RapidFire_status = "OFF"
-Bhop_status = "OFF"
-Triggerbot_status = "OFF"
+LABEL_FONT = ("Segoe UI", 20)
+BUTTON_FONT = ("Segoe UI", 18)
 
-label_aimbot = tk.Label(root, text="AIMBOT:OFF", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 20))
-label_esp = tk.Label(root, text="ESP:OFF", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 20))
-label_RapidFire = tk.Label(root, text= "RapidFire:OFF", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 20))
-label_Bhop = tk.Label(root, text= "Bhop:OFF", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 20))
-label_Triggerbot = tk.Label(root, text= "Triggerbot:OFF", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 20))
+# Toggle function
+def toggle_feature(name):
+    statuses[name] = "ON" if statuses[name] == "OFF" else "OFF"
+    labels[name].config(
+        text=f"{name}: {statuses[name]}",
+        fg="#00ff00" if statuses[name] == "ON" else "#ff0000"
+    )
+    play_beep()
 
-button_aimbot = tk.Button(root, text="Enable/Disable", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 24), command=toggle_aimbot)
-button_esp = tk.Button(root, text="Enable/Disable", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 24), command=toggle_esp)
-button_RapidFire = tk.Button(root, text="Enable/Disable", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 24), command=toggle_RapidFire)
-button_Bhop = tk.Button(root, text="Enable/Disable", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 24),command=toggle_Bhop)
-button_Triggerbot = tk.Button(root, text="Enable/Disable", fg="#ffffff", bg="#9F2B68", font=("Helvetica", 24),command=toggle_Triggerbot)
+# --- Title Label ---
+title_label = tk.Label(
+    root, text="Fake Cheat Toggle Menu",
+    fg="#ffffff", bg="#2c2c2c",
+    font=("Segoe UI", 26, "bold")
+)
+title_label.pack(pady=(20, 10))
 
-label_aimbot.grid(row=0, column=0, sticky=tk.W)
-label_esp.grid(row=1, column=0, sticky=tk.W)
-label_RapidFire.grid(row=2, column=0, sticky=tk.W)
-label_Bhop.grid(row=3, column=0, sticky=tk.W)
-label_Triggerbot.grid(row=4, column=0,sticky=tk.W)
-button_aimbot.grid(row=0, column=1, sticky=tk.W)
-button_esp.grid(row=1, column=1, sticky=tk.W)
-button_RapidFire.grid(row=2, column=1, sticky=tk.W)
-button_Bhop.grid(row=3, column=1, sticky=tk.W)
-button_Triggerbot.grid(row=4, column=1,sticky=tk.W)
+# --- Button/Label Frame ---
+frame = tk.Frame(root, bg="#3a3a3a", bd=4, relief="groove")
+frame.pack(pady=10)
+
+# --- Create Labels & Buttons Dynamically ---
+for i, feature in enumerate(features):
+    statuses[feature] = "OFF"
+
+    labels[feature] = tk.Label(
+        frame,
+        text=f"{feature}: OFF",
+        fg="#ff0000",
+        bg="#3a3a3a",
+        font=LABEL_FONT,
+        anchor="w",
+        width=15
+    )
+    labels[feature].grid(row=i, column=0, padx=10, pady=6, sticky="w")
+
+    buttons[feature] = tk.Button(
+        frame,
+        text="Enable/Disable",
+        fg="#ffffff",
+        bg="#545454",
+        activebackground="#3d3d3d",
+        activeforeground="#00ff00",
+        font=BUTTON_FONT,
+        command=lambda f=feature: toggle_feature(f),
+        bd=3,
+        relief="solid",
+        highlightthickness=2,
+        highlightbackground="#000000",
+        width=15
+    )
+    buttons[feature].grid(row=i, column=1, padx=10, pady=6)
+
+# --- Final Run ---
 root.mainloop()
