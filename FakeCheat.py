@@ -1,15 +1,13 @@
 import tkinter as tk
-import winsound  # For sound on toggle (Windows only)
+
 
 root = tk.Tk()
 root.title("Mercury")
-root.geometry("500x500")
+root.geometry("710x500")
 root.configure(background="#2c2c2c")
-root.resizable(False, False)
+root.resizable(True, True)
 
-# Sound effect (beep)
-def play_beep():
-    winsound.Beep(800, 50)  # (frequency, duration)
+
 
 # Feature names
 features = ["AIMBOT", "ESP", "RapidFire", "Bhop", "Triggerbot"]
@@ -31,7 +29,7 @@ def toggle_feature(name):
 
 # --- Title Label ---
 title_label = tk.Label(
-    root, text="Fake Cheat Toggle Menu",
+    root, text="Mercury",
     fg="#ffffff", bg="#2c2c2c",
     font=("Segoe UI", 26, "bold")
 )
