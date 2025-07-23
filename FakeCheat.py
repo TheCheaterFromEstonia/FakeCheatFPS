@@ -1,60 +1,58 @@
 import tkinter as tk
 
-
-root = tk.Tk()
-root.title("Mercury")
-root.geometry("710x500")
-root.configure(background="#2c2c2c")
-root.resizable(True, True)
-
-
-
-# Feature names
-features = ["AIMBOT", "ESP", "RapidFire", "Bhop", "Triggerbot"]
-statuses = {}
-labels = {}
-buttons = {}
-
+# --- Constants ---
+WINDOW_TITLE = "Mercury"
+WINDOW_SIZE = "710x500"
+BG_COLOR = "#2c2c2c"
+FRAME_BG = "#3a3a3a"
 LABEL_FONT = ("Segoe UI", 20)
 BUTTON_FONT = ("Segoe UI", 18)
+FEATURES = ["AIMBOT", "ESP", "RapidFire", "Bhop", "Triggerbot"]
 
-# Toggle function
+# --- GUI Setup ---
+root = tk.Tk()
+root.title(WINDOW_TITLE)
+root.geometry(WINDOW_SIZE)
+root.configure(background=BG_COLOR)
+root.resizable(True, True)
+
+# --- UI Element Containers ---
+statuses = {feature: "OFF" for feature in FEATURES}
+labels = {}
+
+# --- Toggle Function ---
 def toggle_feature(name):
     statuses[name] = "ON" if statuses[name] == "OFF" else "OFF"
     labels[name].config(
         text=f"{name}: {statuses[name]}",
         fg="#00ff00" if statuses[name] == "ON" else "#ff0000"
     )
-    play_beep()
 
-# --- Title Label ---
-title_label = tk.Label(
-    root, text="Mercury",
-    fg="#ffffff", bg="#2c2c2c",
+# --- Title ---
+tk.Label(
+    root, text=WINDOW_TITLE,
+    fg="#ffffff", bg=BG_COLOR,
     font=("Segoe UI", 26, "bold")
-)
-title_label.pack(pady=(20, 10))
+).pack(pady=(20, 10))
 
-# --- Button/Label Frame ---
-frame = tk.Frame(root, bg="#3a3a3a", bd=4, relief="groove")
+# --- Frame for Buttons/Labels ---
+frame = tk.Frame(root, bg=FRAME_BG, bd=4, relief="groove")
 frame.pack(pady=10)
 
-# --- Create Labels & Buttons Dynamically ---
-for i, feature in enumerate(features):
-    statuses[feature] = "OFF"
-
+# --- Feature Rows ---
+for i, feature in enumerate(FEATURES):
     labels[feature] = tk.Label(
         frame,
         text=f"{feature}: OFF",
         fg="#ff0000",
-        bg="#3a3a3a",
+        bg=FRAME_BG,
         font=LABEL_FONT,
         anchor="w",
         width=15
     )
     labels[feature].grid(row=i, column=0, padx=10, pady=6, sticky="w")
 
-    buttons[feature] = tk.Button(
+    tk.Button(
         frame,
         text="Enable/Disable",
         fg="#ffffff",
@@ -68,8 +66,7 @@ for i, feature in enumerate(features):
         highlightthickness=2,
         highlightbackground="#000000",
         width=15
-    )
-    buttons[feature].grid(row=i, column=1, padx=10, pady=6)
+    ).grid(row=i, column=1, padx=10, pady=6)
 
-# --- Final Run ---
+# --- Start GUI Loop ---
 root.mainloop()
