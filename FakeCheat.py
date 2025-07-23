@@ -2,7 +2,7 @@ import tkinter as tk
 import winsound  # For sound on toggle (Windows only)
 
 root = tk.Tk()
-root.title("Fake Cheat Panel")
+root.title("Mercury")
 root.geometry("500x500")
 root.configure(background="#2c2c2c")
 root.resizable(False, False)
